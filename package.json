@@ -1,6 +1,6 @@
 {
-  "name": "leaflet-svgicon",
-  "version": "1.1.0",
+  "name": "@decidim/leaflet-svgicon",
+  "version": "1.0.0",
   "description": "An SVG-based Icon for Leaflet and an accompanying Marker class",
   "main": "svg-icon.js",
   "scripts": {
@@ -8,10 +8,10 @@
   },
   "author": "Ilya Atkin <ilya.atkin@unh.edu>",
   "license": "MIT",
-  "homepage": "https://github.com/iatkin/leaflet-svgicon",
+  "homepage": "https://github.com/decidim/leaflet-svgicon",
   "repository": {
     "type": "git",
-    "url": "https://github.com/iatkin/leaflet-svgicon.git"
+    "url": "https://github.com/decidim/leaflet-svgicon.git"
   },
   "dependencies": {
     "leaflet": ">=0.7.0"
