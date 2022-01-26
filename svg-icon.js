@@ -3,7 +3,7 @@
 //Ilya Atkin
 //ilya.atkin@unh.edu
 
-L.DivIcon.SVGIcon = L.DivIcon.extend({
+var SVGIcon = L.DivIcon.extend({
     options: {
         "circleText": "",
         "className": "svg-icon",
@@ -11,7 +11,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         "circleColor": null, //defaults to color
         "circleOpacity": null, // defaults to opacity
         "circleFillColor": "rgb(255,255,255)",
-        "circleFillOpacity": null, //default to opacity 
+        "circleFillOpacity": null, //default to opacity
         "circleRatio": 0.5,
         "circleWeight": null, //defaults to weight
         "color": "rgb(0,102,255)",
@@ -36,7 +36,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
     },
     initialize: function(options) {
         options = L.Util.setOptions(this, options)
-        
+
         //iconSize needs to be converted to a Point object if it is not passed as one
         options.iconSize = L.point(options.iconSize)
 
@@ -59,11 +59,11 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         if (!options.circleWeight) {
             options.circleWeight = options.weight
         }
-        if (!options.fillColor) { 
+        if (!options.fillColor) {
             options.fillColor = options.color
         }
         if (!options.fontSize) {
-            options.fontSize = Number(options.iconSize.x/4) 
+            options.fontSize = Number(options.iconSize.x/4)
         }
         if (!options.iconAnchor) {
             options.iconAnchor = L.point(Number(options.iconSize.x)/2, Number(options.iconSize.y))
@@ -89,12 +89,12 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var stroke = this.options.circleColor
         var strokeOpacity = this.options.circleOpacity
         var strokeWidth = this.options.circleWeight
-        var className = this.options.className + "-circle"        
-       
+        var className = this.options.className + "-circle"
+
         var circle = '<circle class="' + className + '" cx="' + cx + '" cy="' + cy + '" r="' + radius +
-            '" fill="' + fill + '" fill-opacity="'+ fillOpacity + 
+            '" fill="' + fill + '" fill-opacity="'+ fillOpacity +
             '" stroke="' + stroke + '" stroke-opacity=' + strokeOpacity + '" stroke-width="' + strokeWidth + '"/>'
-        
+
         return circle
     },
     _createPathDescription: function() {
@@ -133,21 +133,21 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
          var stroke = this.options.shadowColor
          var fill = this.options.shadowColor
          var className = this.options.className + "-shadow"
- 
+
          var origin = (this.options.iconSize.x / 2) + "px " + (this.options.iconSize.y) + "px"
          var rotation = this.options.shadowAngle
          var height = this.options.shadowLength
          var opacity = this.options.shadowOpacity
          var blur = this.options.shadowBlur
          var translate = this.options.shadowTranslate.x + "px, " + this.options.shadowTranslate.y + "px"
- 
+
          var blurFilter = "<filter id='iconShadowBlur'><feGaussianBlur in='SourceGraphic' stdDeviation='" + blur + "'/></filter>"
- 
+
          var shadow = '<path filter="url(#iconShadowBlur") class="' + className + '" d="' + pathDescription +
              '" fill="' + fill + '" stroke-width="' + strokeWidth + '" stroke="' + stroke +
              '" style="opacity: ' + opacity + '; ' + 'transform-origin: ' + origin +'; transform: rotate(' + rotation + 'deg) translate(' + translate + ') scale(1, '+ height +')' +
              '"/>'
- 
+
          return blurFilter+shadow
      },
     _createSVG: function() {
@@ -156,14 +156,14 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var text = this._createText()
         var shadow = this.options.shadowEnable ? this._createShadow() : ""
         var className = this.options.className + "-svg"
-        var width = this.options.iconSize.x 
+        var width = this.options.iconSize.x
         var height = this.options.iconSize.y
-             
+
         if (this.options.shadowEnable) {
             width += this.options.iconSize.y * this.options.shadowLength - (this.options.iconSize.x / 2)
             width = Math.max(width, 32)
             height += this.options.iconSize.y * this.options.shadowLength
-        }        
+        }
 
         var style = "width:" + width + "px; height:" + height
         var svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="' + className + '" style="' + style + '">' + shadow + path + circle + text + '</svg>'
@@ -176,7 +176,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
         var lineHeight = Number(this.options.fontSize)
 
         var x = this.options.circleAnchor.x
-        var y = this.options.circleAnchor.y + (lineHeight * 0.35) //35% was found experimentally 
+        var y = this.options.circleAnchor.y + (lineHeight * 0.35) //35% was found experimentally
         var circleText = this.options.circleText
         var textColor = this.options.fontColor.replace("rgb(", "rgba(").replace(")", "," + this.options.fontOpacity + ")")
 
@@ -186,11 +186,7 @@ L.DivIcon.SVGIcon = L.DivIcon.extend({
     }
 })
 
-L.divIcon.svgIcon = function(options) {
-    return new L.DivIcon.SVGIcon(options)
-}
-
-L.Marker.SVGMarker = L.Marker.extend({
+var SVGMarker = L.Marker.extend({
     options: {
         "iconFactory": L.divIcon.svgIcon,
         "iconOptions": {}
@@ -232,6 +228,7 @@ L.Marker.SVGMarker = L.Marker.extend({
     }
 })
 
-L.marker.svgMarker = function(latlng, options) {
-    return new L.Marker.SVGMarker(latlng, options)
+module.exports = {
+  SVGMarker: SVGMarker,
+  SVGIcon: SVGIcon
 }
